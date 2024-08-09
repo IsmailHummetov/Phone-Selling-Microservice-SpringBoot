@@ -19,6 +19,4 @@ public class OrderDto {
     private Integer ram;
     private Integer storage;
     private Double price;
-    @Lob
-    private byte[] data;
 }

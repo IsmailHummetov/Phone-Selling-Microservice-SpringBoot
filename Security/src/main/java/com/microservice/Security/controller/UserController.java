@@ -1,5 +1,6 @@
 package com.microservice.Security.controller;
 
+import com.microservice.Security.dto.UserDto;
 import com.microservice.Security.security.JwtGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +16,8 @@ public class UserController {
 
     private final JwtGenerator jwtGenerator;
 
-    @GetMapping("hello")
-    public ResponseEntity<String> sayHello() {
+    @GetMapping("info")
+    public ResponseEntity<UserDto> sayHello() {
         String currentUserName = "";
         String role = "";
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -24,7 +25,10 @@ public class UserController {
             currentUserName = authentication.getName();
             role = authentication.getAuthorities().toString();
         }
-        return ResponseEntity.ok(currentUserName + ": Hello from secured entryPoint"
-                + "\n" + role);
+        UserDto userDto = UserDto.builder()
+                .username(currentUserName)
+                .role(role)
+                .build();
+        return ResponseEntity.ok(userDto);
     }
 }

@@ -38,7 +38,6 @@ public class OrderServiceImpl implements OrderService {
             order.setRam(orderDto.getRam());
             order.setStorage(orderDto.getStorage());
             order.setPrice(orderDto.getPrice());
-            order.setData(orderDto.getData());
             orderRepository.save(order);
             return true;
         }

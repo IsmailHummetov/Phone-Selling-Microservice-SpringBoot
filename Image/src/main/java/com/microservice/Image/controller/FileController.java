@@ -66,7 +66,6 @@ public class FileController {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.IMAGE_JPEG);
             headers.setContentType(MediaType.IMAGE_PNG);
-
             return new ResponseEntity<>(fileDB.getData(), headers, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);

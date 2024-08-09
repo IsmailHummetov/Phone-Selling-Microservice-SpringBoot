@@ -1,11 +1,16 @@
 package com.microservice.Order.controller;
 
+import com.microservice.Order.dto.BrandDto;
+import com.microservice.Order.dto.ModelDto;
 import com.microservice.Order.dto.OrderDto;
+import com.microservice.Order.dto.UserDto;
+import com.microservice.Order.mapper.OrderMapping;
 import com.microservice.Order.service.inter.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -14,6 +19,7 @@ import java.util.List;
 @RequestMapping("/orders")
 public class OrderController {
 
+    private final RestTemplate restTemplate = new RestTemplate();
     private final OrderService orderService;
 
     @GetMapping
@@ -23,8 +29,12 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createOrder(
-            @RequestBody OrderDto orderDto) {
+    public ResponseEntity<String> createOrder(@RequestParam("modelId") Long modelId) {
+        ModelDto modelDto = restTemplate.getForObject(
+                "http://localhost:8081/phones/model/" + modelId,
+                ModelDto.class);
+        OrderDto orderDto = OrderMapping.mapFromModelDtoToOrderDto(modelDto);
+
         String username = "nihad";
         if (orderService.createOrder(username, orderDto)) {
             return new ResponseEntity<>("Order created successfully",

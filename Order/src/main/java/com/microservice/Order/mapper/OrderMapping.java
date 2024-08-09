@@ -1,5 +1,6 @@
 package com.microservice.Order.mapper;
 
+import com.microservice.Order.dto.ModelDto;
 import com.microservice.Order.dto.OrderDto;
 import com.microservice.Order.model.Order;
 
@@ -13,7 +14,6 @@ public class OrderMapping {
                 .storage(orderDto.getStorage())
                 .ram(orderDto.getRam())
                 .price(orderDto.getPrice())
-                .data(orderDto.getData())
                 .build();
     }
     public static OrderDto mapToOrderDto(Order order){
@@ -26,7 +26,17 @@ public class OrderMapping {
                 .storage(order.getStorage())
                 .ram(order.getRam())
                 .price(order.getPrice())
-                .data(order.getData())
+                .build();
+    }
+    public static OrderDto mapFromModelDtoToOrderDto(ModelDto modelDto){
+        return OrderDto.builder()
+                .id(modelDto.getId())
+                .brandName(modelDto.getBrandDto().getName())
+                .modelName(modelDto.getName())
+                .colour(modelDto.getColour())
+                .storage(modelDto.getStorage())
+                .ram(modelDto.getRam())
+                .price(modelDto.getPrice())
                 .build();
     }
 }
