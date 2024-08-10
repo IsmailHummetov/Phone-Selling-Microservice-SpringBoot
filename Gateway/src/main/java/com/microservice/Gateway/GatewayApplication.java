@@ -17,9 +17,13 @@ public class GatewayApplication {
 	@Bean
 	public RouteLocator routerBuilder(RouteLocatorBuilder routeLocatorBuilder){
 		return routeLocatorBuilder.routes()
-				.route("Microservice1",r->r.path("/serviceA/**")
+				.route("Phone",r->r.path("/phones/**")
 						.uri("http://localhost:8081/"))
-				.route("Microservice2",r->r.path("/serviceB/**")
-						.uri("http://localhost:8082/")).build();
+				.route("Image",r->r.path("/upload/**","/files/**")
+						.uri("http://localhost:8082/"))
+				.route("Order",r->r.path("/orders/**")
+						.uri("http://localhost:8083/"))
+				.route("Security",r->r.path("/auth/**","/info")
+						.uri("http://localhost:8084/")).build();
 	}
 }
