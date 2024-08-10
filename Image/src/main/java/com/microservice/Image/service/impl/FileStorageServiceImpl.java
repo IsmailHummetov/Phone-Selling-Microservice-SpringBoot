@@ -10,6 +10,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 @Service
@@ -36,5 +37,17 @@ public class FileStorageServiceImpl implements FileStorageService {
     @Transactional(readOnly = true)
     public Stream<FileDB> getAllFiles() {
         return fileDBRepository.findAll().stream();
+    }
+
+    @Override
+    @Transactional
+    public boolean deleteFile(Long phoneId) {
+        Optional<FileDB> fileDB = fileDBRepository.findByPhoneId(phoneId);
+        if (fileDB.isPresent())
+        {
+            fileDBRepository.delete(fileDB.get());
+            return true;
+        }
+        return false;
     }
 }

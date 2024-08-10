@@ -1,5 +1,6 @@
 package com.microservice.Phone.service.impl;
 
+import com.microservice.Phone.clients.ImageClient;
 import com.microservice.Phone.dto.ModelDto;
 import com.microservice.Phone.mapper.PhoneMapper;
 import com.microservice.Phone.model.Brand;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 public class ModelServiceImpl implements ModelService {
     private final ModelRepository modelRepository;
     private final BrandRepository brandRepository;
+    private final ImageClient imageClient;
 
     @Override
     public List<ModelDto> getAllModelByBrandId(Long brandId) {
@@ -70,6 +72,7 @@ public class ModelServiceImpl implements ModelService {
     @Override
     public boolean deleteModel(Long modelId) {
         if (modelRepository.existsById(modelId)){
+            imageClient.delete(modelId);
             modelRepository.deleteById(modelId);
             return true;
         }

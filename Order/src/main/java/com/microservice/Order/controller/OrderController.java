@@ -1,9 +1,11 @@
 package com.microservice.Order.controller;
 
+import com.microservice.Order.clients.ModelClient;
 import com.microservice.Order.dto.BrandDto;
 import com.microservice.Order.dto.ModelDto;
 import com.microservice.Order.dto.OrderDto;
 import com.microservice.Order.dto.UserDto;
+import com.microservice.Order.external.Model;
 import com.microservice.Order.mapper.OrderMapping;
 import com.microservice.Order.service.inter.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,7 @@ public class OrderController {
 
     private final RestTemplate restTemplate = new RestTemplate();
     private final OrderService orderService;
+    private final ModelClient modelClient;
 
     @GetMapping
     public ResponseEntity<List<OrderDto>> getAllOrders(
@@ -30,10 +33,8 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<String> createOrder(@RequestParam("modelId") Long modelId) {
-        ModelDto modelDto = restTemplate.getForObject(
-                "http://localhost:8081/phones/model/" + modelId,
-                ModelDto.class);
-        OrderDto orderDto = OrderMapping.mapFromModelDtoToOrderDto(modelDto);
+        Model model = modelClient.getModel(modelId);
+        OrderDto orderDto = OrderMapping.mapFromModelToOrderDto(model);
 
         String username = "nihad";
         if (orderService.createOrder(username, orderDto)) {

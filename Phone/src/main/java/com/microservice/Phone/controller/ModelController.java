@@ -1,11 +1,13 @@
 package com.microservice.Phone.controller;
 
+import com.microservice.Phone.clients.ImageClient;
 import com.microservice.Phone.dto.ModelDto;
 import com.microservice.Phone.service.inter.ModelService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -15,6 +17,7 @@ import java.util.List;
 public class ModelController {
 
     private final ModelService modelService;
+    private final ImageClient imageClient;
 
     @GetMapping("/models")
     public ResponseEntity<List<ModelDto>> getAllModels() {

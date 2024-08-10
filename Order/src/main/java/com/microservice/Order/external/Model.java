@@ -1,6 +1,6 @@
-package com.microservice.Order.dto;
+package com.microservice.Order.external;
 
-import jakarta.persistence.Lob;
+import com.microservice.Order.dto.BrandDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,14 +10,14 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderDto {
+public class Model {
     private Long id;
-    private Long phoneId;
-    private String username;
-    private String brandName;
-    private String modelName;
+    private String name;
     private String colour;
     private Integer ram;
     private Integer storage;
+    private Double frontCamera;
+    private Double rearCamera;
     private Double price;
+    private BrandDto brandDto;
 }
