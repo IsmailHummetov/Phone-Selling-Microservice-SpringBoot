@@ -1,0 +1,32 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: Gateway
+  cloud:
+    gateway:
+      routes:
+        - id: Phone
+          uri: http://localhost:8081/
+          Predicates:
+            - Path=/phones/**
+        - id: Image
+          uri: http://localhost:8082/
+          Predicates:
+            - Path=/upload/**
+            - Path=/files/**
+        - id: Order
+          uri: http://localhost:8083/
+          Predicates:
+            - Path=/orders/**
+        - id: Security
+          uri: http://localhost:8084/
+          Predicates:
+            - Path=/auth/**
+            - Path=/info
+eureka:
+  client:
+    serviceUrl:
+      defaultZone : http://localhost:8761/eureka/
+  registerWithEureka : true
+  fetchRegistry : true

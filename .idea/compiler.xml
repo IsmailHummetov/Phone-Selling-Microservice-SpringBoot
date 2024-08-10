@@ -12,11 +12,13 @@
         <module name="Image" />
         <module name="Security" />
         <module name="Phone" />
+        <module name="Gateway" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Gateway" options="-parameters" />
       <module name="Image" options="-parameters" />
       <module name="Order" options="-parameters" />
       <module name="Phone" options="-parameters" />

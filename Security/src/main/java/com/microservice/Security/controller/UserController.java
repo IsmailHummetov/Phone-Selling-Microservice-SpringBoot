@@ -16,7 +16,7 @@ public class UserController {
 
     private final JwtGenerator jwtGenerator;
 
-    @GetMapping("info")
+    @GetMapping("/info")
     public ResponseEntity<UserDto> sayHello() {
         String currentUserName = "";
         String role = "";
