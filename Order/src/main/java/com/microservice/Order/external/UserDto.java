@@ -1,4 +1,4 @@
-package com.microservice.Order.dto;
+package com.microservice.Order.external;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
