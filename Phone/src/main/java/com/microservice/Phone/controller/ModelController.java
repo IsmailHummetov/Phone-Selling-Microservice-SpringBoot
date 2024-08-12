@@ -17,7 +17,6 @@ import java.util.List;
 public class ModelController {
 
     private final ModelService modelService;
-    private final ImageClient imageClient;
 
     @GetMapping("/models")
     public ResponseEntity<List<ModelDto>> getAllModels() {

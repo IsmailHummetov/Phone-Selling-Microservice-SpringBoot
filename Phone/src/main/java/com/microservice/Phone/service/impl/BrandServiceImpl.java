@@ -1,9 +1,12 @@
 package com.microservice.Phone.service.impl;
 
+import com.microservice.Phone.clients.ImageClient;
 import com.microservice.Phone.dto.BrandDto;
 import com.microservice.Phone.mapper.PhoneMapper;
 import com.microservice.Phone.model.Brand;
+import com.microservice.Phone.model.Model;
 import com.microservice.Phone.repository.BrandRepository;
+import com.microservice.Phone.repository.ModelRepository;
 import com.microservice.Phone.service.inter.BrandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,8 @@ import java.util.stream.Collectors;
 public class BrandServiceImpl implements BrandService {
 
     private final BrandRepository brandRepository;
+    private final ModelRepository modelRepository;
+    private final ImageClient imageClient;
 
     @Override
     public boolean createBrand(BrandDto brandDto) {
@@ -38,6 +43,10 @@ public class BrandServiceImpl implements BrandService {
     public boolean deleteBrand(Long brandId) {
         if (brandRepository.existsById(brandId))
         {
+            List<Model> models = modelRepository.findByBrandId(brandId);
+            for (Model model: models){
+                imageClient.delete(model.getId());
+            }
             brandRepository.deleteById(brandId);
             return true;
         }
